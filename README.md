@@ -6,18 +6,6 @@ Thank you for your interest in contributing to the AI SaaS Platform! This docume
 
 By participating in this project, you agree to abide by our Code of Conduct. Please be respectful and constructive in all interactions.
 
-## How to Contribute
-
-### Reporting Bugs
-
-1. Check if the bug has already been reported in [Issues](https://github.com/yourusername/ai-saas-platform/issues)
-2. If not, create a new issue using the bug report template
-3. Provide as much detail as possible, including:
-   - Steps to reproduce
-   - Expected vs actual behavior
-   - Environment details
-   - Error logs or screenshots
-
 ### Suggesting Features
 
 1. Check if the feature has already been requested
@@ -38,7 +26,7 @@ By participating in this project, you agree to abide by our Code of Conduct. Ple
 1. Fork the repository
 2. Clone your fork:
    \`\`\`bash
-   git clone https://github.com/yourusername/ai-saas-platform.git
+   git clone https://github.com/rambodalemi/Ai
    cd ai-saas-platform
    \`\`\`
 3. Install dependencies:
