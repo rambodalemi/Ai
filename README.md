@@ -1,254 +1,105 @@
-# API Documentation
+# Contributing to AI SaaS Platform
 
-This document describes the API endpoints available in the AI SaaS Platform.
+Thank you for your interest in contributing to the AI SaaS Platform! This document provides guidelines and information for contributors.
 
-## Authentication
+## Code of Conduct
 
-All API endpoints require authentication via Clerk. Include the session token in your requests.
+By participating in this project, you agree to abide by our Code of Conduct. Please be respectful and constructive in all interactions.
 
-## Base URL
+## How to Contribute
 
-- Development: `http://localhost:3000/api`
-- Production: `https://yourdomain.com/api`
+### Reporting Bugs
 
-## Endpoints
+1. Check if the bug has already been reported in [Issues](https://github.com/yourusername/ai-saas-platform/issues)
+2. If not, create a new issue using the bug report template
+3. Provide as much detail as possible, including:
+   - Steps to reproduce
+   - Expected vs actual behavior
+   - Environment details
+   - Error logs or screenshots
 
-### Chat API
+### Suggesting Features
 
-Create AI chat conversations with streaming responses.
+1. Check if the feature has already been requested
+2. Create a new issue using the feature request template
+3. Clearly describe the feature and its benefits
+4. Consider implementation complexity and project scope
 
-#### `POST /api/chat`
+### Contributing Code
 
-**Request Body:**
-\`\`\`json
-{
-  "messages": [
-    {
-      "role": "user" | "assistant" | "system",
-      "content": "string"
-    }
-  ]
-}
-\`\`\`
+#### Prerequisites
 
-**Response:**
-Streaming response with AI-generated content.
+- Node.js 18+
+- Git
+- Familiarity with Next.js, TypeScript, and React
 
-**Example:**
-\`\`\`javascript
-const response = await fetch('/api/chat', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    messages: [
-      { role: 'user', content: 'Hello, how are you?' }
-    ]
-  })
-});
-\`\`\`
+#### Setup Development Environment
 
-**Error Responses:**
-- `401`: Unauthorized - User not authenticated
-- `400`: Bad Request - Invalid message format
-- `500`: Internal Server Error - OpenAI API error
+1. Fork the repository
+2. Clone your fork:
+   \`\`\`bash
+   git clone https://github.com/yourusername/ai-saas-platform.git
+   cd ai-saas-platform
+   \`\`\`
+3. Install dependencies:
+   \`\`\`bash
+   npm install
+   \`\`\`
+4. Set up environment variables (see SETUP.md)
+5. Start development server:
+   \`\`\`bash
+   npm run dev
+   \`\`\`
 
----
+#### Making Changes
 
-### Image Generation API
+1. Create a new branch:
+   \`\`\`bash
+   git checkout -b feature/your-feature-name
+   \`\`\`
+2. Make your changes
+3. Follow coding standards:
+   - Use TypeScript
+   - Follow existing code style
+   - Add comments for complex logic
+   - Write meaningful commit messages
+4. Test your changes:
+   \`\`\`bash
+   npm run lint
+   npm run type-check
+   \`\`\`
+5. Commit your changes:
+   \`\`\`bash
+   git commit -m "feat: add new feature description"
+   \`\`\`
 
-Generate images using DALL-E 3.
+#### Commit Message Format
 
-#### `POST /api/image`
+Use conventional commits format:
+- `feat:` - New features
+- `fix:` - Bug fixes
+- `docs:` - Documentation changes
+- `style:` - Code style changes
+- `refactor:` - Code refactoring
+- `test:` - Adding tests
+- `chore:` - Maintenance tasks
 
-**Request Body:**
-\`\`\`json
-{
-  "prompt": "string",
-  "size": "1024x1024" | "1024x1792" | "1792x1024",
-  "style": "natural" | "vivid"
-}
-\`\`\`
+#### Pull Request Process
 
-**Response:**
-\`\`\`json
-{
-  "imageUrl": "https://oaidalleapiprodscus.blob.core.windows.net/..."
-}
-\`\`\`
+1. Push your branch to your fork:
+   \`\`\`bash
+   git push origin feature/your-feature-name
+   \`\`\`
+2. Create a Pull Request from your fork to the main repository
+3. Fill out the PR template completely
+4. Ensure all checks pass
+5. Wait for review and address feedback
 
-**Example:**
-\`\`\`javascript
-const response = await fetch('/api/image', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    prompt: 'A beautiful sunset over mountains',
-    size: '1024x1024',
-    style: 'natural'
-  })
-});
+## Development Guidelines
 
-const data = await response.json();
-console.log(data.imageUrl);
-\`\`\`
+### Code Style
 
-**Error Responses:**
-- `401`: Unauthorized - User not authenticated
-- `400`: Bad Request - Invalid prompt or parameters
-- `500`: Internal Server Error - Image generation failed
-
----
-
-### Audio Transcription API
-
-Transcribe audio files using Whisper AI.
-
-#### `POST /api/transcription`
-
-**Request Body:**
-Form data with audio file.
-
-**Response:**
-\`\`\`json
-{
-  "transcription": "string"
-}
-\`\`\`
-
-**Example:**
-\`\`\`javascript
-const formData = new FormData();
-formData.append('audio', audioFile);
-
-const response = await fetch('/api/transcription', {
-  method: 'POST',
-  body: formData
-});
-
-const data = await response.json();
-console.log(data.transcription);
-\`\`\`
-
-**Supported Audio Formats:**
-- MP3
-- MP4
-- MPEG
-- MPGA
-- M4A
-- WAV
-- WEBM
-
-**Error Responses:**
-- `401`: Unauthorized - User not authenticated
-- `400`: Bad Request - No audio file provided
-- `500`: Internal Server Error - Transcription failed
-
----
-
-### Stripe Checkout API
-
-Create Stripe checkout sessions for subscriptions.
-
-#### `POST /api/stripe/checkout`
-
-**Request Body:**
-\`\`\`json
-{
-  "plan": "pro" | "enterprise"
-}
-\`\`\`
-
-**Response:**
-\`\`\`json
-{
-  "url": "https://checkout.stripe.com/pay/..."
-}
-\`\`\`
-
-**Example:**
-\`\`\`javascript
-const response = await fetch('/api/stripe/checkout', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    plan: 'pro'
-  })
-});
-
-const data = await response.json();
-window.location.href = data.url;
-\`\`\`
-
-**Error Responses:**
-- `401`: Unauthorized - User not authenticated
-- `400`: Bad Request - Invalid plan
-- `500`: Internal Server Error - Stripe error
-
----
-
-## Rate Limits
-
-### OpenAI API Limits
-- Depends on your OpenAI plan and credits
-- Free tier: Very limited requests per minute
-- Paid tier: Higher limits based on usage tier
-
-### Application Limits
-- No additional rate limiting implemented
-- Consider implementing rate limiting for production use
-
-## Error Handling
-
-All API endpoints return consistent error responses:
-
-\`\`\`json
-{
-  "error": "Error message",
-  "code": "ERROR_CODE",
-  "details": "Additional error details"
-}
-\`\`\`
-
-## Usage Examples
-
-### React Hook for Chat
-\`\`\`typescript
-import { useChat } from '@ai-sdk/react';
-
-function ChatComponent() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    api: '/api/chat'
-  });
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        value={input}
-        onChange={handleInputChange}
-        disabled={isLoading}
-      />
-      <button type="submit" disabled={isLoading}>
-        Send
-      </button>
-    </form>
-  );
-}
-\`\`\`
-
-### Image Generation Hook
-\`\`\`typescript
-const [image, setImage] = useState<string | null>(null);
-const [loading, setLoading] = useState(false);
-
-const generateImage = async (prompt: string) => {
-  setLoading(true);
-  try {
-    const response = await fetch('/api/image', {
-      method: 'POST',
-      headers: { 'Content-Type': 
+- Use TypeScript for all new code
+- Follow existing naming conventions
+- Use meaningful variable and function names
+- Add JSDoc comment
